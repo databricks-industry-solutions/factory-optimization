@@ -69,20 +69,6 @@ job_json = {
                 },
                 "task_key": "fact_opt_01",
                 "description": ""
-            },
-          {
-                "job_cluster_key": "fact_opt_cluster",
-                "libraries": [],
-                "notebook_task": {
-                    "notebook_path": f"_resources/01-load-table-for-sql-analytics-dashboard"
-                },
-                "task_key": "fact_opt_02",
-                "description": "",
-                "depends_on": [
-                    {
-                        "task_key": "fact_opt_01"
-                    }
-                ]
             }
         ],
         "job_clusters": [

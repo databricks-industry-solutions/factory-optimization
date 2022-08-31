@@ -86,7 +86,7 @@ def get_raw_telemetry():
       .option("cloudFiles.format", "json")
       .option("cloudFiles.inferColumnTypes", "true")
       .option("cloudFiles.maxFilesPerTrigger", 16)
-      .load("/mnt/field-demos/manufacturing/oee/incoming_sensors"))
+      .load("s3://db-gtm-industry-solutions/data/mfg/factory-optimization/incoming_sensors"))
   return df.withColumn("body", col("body").cast('string'))
 
 # COMMAND ----------
@@ -99,7 +99,7 @@ def get_raw_telemetry():
 # MAGIC ```
 # MAGIC CREATE INCREMENTAL LIVE TABLE OEE_bronze
 # MAGIC   COMMENT "Raw telemetry from factory floor"
-# MAGIC AS SELECT * FROM cloud_files('/demo/OEE_demo/', 'json')
+# MAGIC AS SELECT * FROM cloud_files('...', 'json')
 # MAGIC ```
 
 # COMMAND ----------
@@ -164,7 +164,7 @@ def OEE_silver():
 # DBTITLE 1,Ingest Employee count data 
 @dlt.create_table(comment="count of workforce for a given shift read from delta")
 def workforce_silver():
-  return spark.read.format("delta").load("/mnt/field-demos/manufacturing/oee/workforce")
+  return spark.read.format("delta").load("s3://db-gtm-industry-solutions/data/mfg/factory-optimization/workforce")
 
 # COMMAND ----------
 
@@ -226,12 +226,14 @@ def create_agg_kpi_metrics():
 # MAGIC 
 # MAGIC That's it! Our KPIs will be refreshed in real-time and ready to be analyzed.
 # MAGIC 
-# MAGIC We can now start using [DatabrickSQL Dashboard](https://e2-demo-field-eng.cloud.databricks.com/sql/dashboards/1960fc9f-d6f5-4a4e-9534-84193830c073-manufacturing-plant-oee-score?o=1444828305810485) or any of your usual BI tool (PowerBI, Tableau...) to build our Manufacturing Tower Control
+# MAGIC We can now start using DatabrickSQL Dashboard or any of your usual BI tool (PowerBI, Tableau...) to build our Manufacturing Tower Control
 # MAGIC 
 # MAGIC <img src="https://github.com/QuentinAmbard/databricks-demo/raw/main/manufacturing/oee_score/ooe_dashboard.png" width="600px"/>
 # MAGIC 
 # MAGIC ## Next step
 # MAGIC 
 # MAGIC Dashboard Analysis is just the first step of our Data Journey. Databricks Lakehouse let you build more advanced data use-cases such as Predictive models and setup predictive analysis pipeline.
-# MAGIC 
-# MAGIC See the Predictive Maintenance demo for a mode detailed example!
+
+# COMMAND ----------
+
+
