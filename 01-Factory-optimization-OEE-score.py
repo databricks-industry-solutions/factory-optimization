@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md 
+# MAGIC You may find this series of notebooks at https://github.com/databricks-industry-solutions/factory-optimization. 
+
+# COMMAND ----------
+
 # MAGIC %md-sandbox
 # MAGIC # Scenario - Track KPIs to increase plant capacity 
 # MAGIC <img style="float: right" src="https://github.com/QuentinAmbard/databricks-demo/raw/main/manufacturing/oee_score/ooe_production_factories.png" width="600px" />
