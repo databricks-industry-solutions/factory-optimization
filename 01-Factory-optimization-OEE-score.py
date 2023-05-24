@@ -14,7 +14,7 @@
 # MAGIC 
 # MAGIC This requires real-time KPIs tracking based on multiple datasources, including our factories sensor and external sources, to answer questions such as:
 # MAGIC 
-# MAGIC * What's my current avilability
+# MAGIC * What's my current availability
 # MAGIC * What was my past Performance
 # MAGIC * Do I have a factory under-performing and perform root cause analysis
 # MAGIC * ...
@@ -27,7 +27,7 @@
 # MAGIC ## Why OEE?
 # MAGIC Overall Equipment Effectiveness (OEE) is a measure of how well a manufacturing operation is utilized (facilities, time and material) compared to its full potential, during the periods when it is scheduled to run. [References](https://en.wikipedia.org/wiki/Overall_equipment_effectiveness). 
 # MAGIC 
-# MAGIC OEE is the industry standard for measuring manufacturing productivity. OEE is calculated using 3 atttributes
+# MAGIC OEE is the industry standard for measuring manufacturing productivity. OEE is calculated using 3 attributes
 # MAGIC 
 # MAGIC 1. **Availability:** accounts for planned and unplanned stoppages, percentage of scheduled time that the operation is/was available to operate. *i.e.* __(Healthy_time - Error_time)/(Total_time)__
 # MAGIC 2. **Performance:** measure of speed at which the work happens, percentage of its designed speed. *i.e.* __Healthy_time/ Total_time__
@@ -43,8 +43,8 @@
 # MAGIC This is the flow we'll be implementing.
 # MAGIC 
 # MAGIC - Incremental ingestion of data from the sensor / IOT devices
-# MAGIC - Cleanup the data and extract required informations
-# MAGIC - Consume our worksforce dataset coming from our SalesForce integration
+# MAGIC - Cleanup the data and extract required information
+# MAGIC - Consume our workforce dataset coming from our SalesForce integration
 # MAGIC - Merge both dataset and compute real-time aggregation based on a temporal window.
 # MAGIC 
 # MAGIC 
@@ -116,7 +116,7 @@ def get_raw_telemetry():
 # MAGIC 
 # MAGIC The next step is to cleanup the data we received and extract the important field from the JSON data.
 # MAGIC 
-# MAGIC This will increas performances and make the table schema easier to discover for external users, allowing to cleanup any missing data in the process.
+# MAGIC This will increase performance and make the table schema easier to discover for external users, allowing to cleanup any missing data in the process.
 # MAGIC 
 # MAGIC We'll be using Delta Live Table Expectations to enforce the quality in this table.
 # MAGIC 
@@ -177,7 +177,7 @@ def workforce_silver():
 # MAGIC 
 # MAGIC ## Gold layer: Calculate KPI metrics such as OEE, Availability, Quality and Performance
 # MAGIC 
-# MAGIC We'll compute these metrics for all plants under in our command center leveraging structured streamings *Statefull Aggregation*. 
+# MAGIC We'll compute these metrics for all plants under in our command center leveraging structured streamings *Stateful Aggregation*. 
 # MAGIC 
 # MAGIC We'll do a sliding window aggregation based on the time: we'll compute average / min / max stats for every 5min in a sliding window and output the results to our final table.
 # MAGIC 
@@ -202,7 +202,7 @@ import pyspark.sql.functions as F
 
 @dlt.create_table(name="OEE_gold",
                  comment="Aggregated equipment data from shop floor with additional KPI metrics like OEE",
-                 spark_conf={"pipelines.trigger.interval" : "1 mintue"},
+                 spark_conf={"pipelines.trigger.interval" : "1 minute"},
                  table_properties={"pipelines.autoOptimize.managed": "true"})
 @dlt.expect_all(gold_rules)
 def create_agg_kpi_metrics():
@@ -231,7 +231,7 @@ def create_agg_kpi_metrics():
 # MAGIC 
 # MAGIC That's it! Our KPIs will be refreshed in real-time and ready to be analyzed.
 # MAGIC 
-# MAGIC We can now start using DatabrickSQL Dashboard or any of your usual BI tool (PowerBI, Tableau...) to build our Manufacturing Tower Control
+# MAGIC We can now start using Databricks SQL Dashboard or any of your usual BI tool (PowerBI, Tableau...) to build our Manufacturing Tower Control
 # MAGIC 
 # MAGIC <img src="https://github.com/QuentinAmbard/databricks-demo/raw/main/manufacturing/oee_score/ooe_dashboard.png" width="600px"/>
 # MAGIC 
